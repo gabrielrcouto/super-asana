@@ -172,7 +172,7 @@ var SuperAsana = {
 					//[ 1 / 1 ] - Task name
 					//[ 1 / x ] - Task name
 					//[ 1.5 / x ] - Task name
-					pomodoroRegex = /\[(\s*\d*\s*)\/(\s*(\d*|x)\s*)\](\s*)-(\s*)(.*)/,
+					pomodoroRegex = /\[(\s*(\d*|x|0\.\d)\s*)\/(\s*(\d*|x|0\.\d|\?)\s*)\](\s*)-(\s*)(.*)/,
 					//Number of pomodoros completed
 					completed = 0,
 					//Total of pomodoros
@@ -184,12 +184,13 @@ var SuperAsana = {
 
 					//If it's a pomodoro task, sum the pomodoros values
 					if (matchResult) {
-						if (matchResult[1].trim() != 'x') {
-							completed += parseFloat(matchResult[1]);
+						//Array [ "[ x / 1 ] - Task", " x ", "x", " 1 ", "1", " ", " ", "Task" ]
+						if (matchResult[2].trim() != 'x') {
+							completed += parseFloat(matchResult[2]);
 						}
 
-						if (matchResult[2].trim() != 'x') {
-							total += parseFloat(matchResult[2]);
+						if (matchResult[4].trim() != 'x' && matchResult[4].trim() != '?') {
+							total += parseFloat(matchResult[4]);
 						}
 					}
 				});
